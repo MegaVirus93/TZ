@@ -16,21 +16,22 @@ public class Main {
 
     //Main calc
     public static String calc(String input) throws Exception {
+
         boolean isArabianA, isArabianB, isRomanA, isRomanB;
         Operation operation;
         String str_a, str_b, str_total;
 
-        String[] arrayString = input.split(" ");
-        if (arrayString.length > 3) throw new Exception("Формат математической операции не удовлетворяет заданию");
+        String[] arrayParameters = input.split(" ");
+        if (arrayParameters.length != 3) throw new Exception("Формат математической операции не удовлетворяет заданию");
 
-        str_a = arrayString[0].toUpperCase();
-        str_b = arrayString[2].toUpperCase();
-        switch (arrayString[1]) {
+        str_a = arrayParameters[0].toUpperCase();
+        str_b = arrayParameters[2].toUpperCase();
+        switch (arrayParameters[1]) {
             case "+" : operation = Operation.addition; break;
             case "-" : operation = Operation.subtraction; break;
             case "*" : operation = Operation.multiplication; break;
             case "/" : operation = Operation.division; break;
-            default : throw new IllegalStateException("Неизвестная операция: " + arrayString[1]);
+            default : throw new IllegalStateException("Неизвестная операция: " + arrayParameters[1]);
         }
 
         isRomanA = str_a.matches("[MDCLXVI]*");
@@ -49,6 +50,7 @@ public class Main {
     }
 
     static String Calculon(String str_a, String str_b, boolean isArabian, Operation operation) throws Exception {
+
         int a, b, total;
         String str_total;
         if (isArabian) {
@@ -71,6 +73,10 @@ public class Main {
 
     static int Calclulate(int a, int b, Operation operation) throws Exception {
 
+        /**
+         * Выбор опрерации сложения исходя параметра operation
+         */
+
         int total;
 
         switch (operation) {
@@ -85,32 +91,45 @@ public class Main {
     }
 
     static String arabian2Roman(int number) {
+
+        /**
+         * Перевод из арабского в римский путем
+         * нахождения количества римского значения
+         * и последовательного записывания римского
+         * от старшего разряда к младшему
+         */
+
         String[] keys = new String[]{"M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I"};
         int[] values = new int[]{1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1};
 
         StringBuilder sb = new StringBuilder();
-        int indexOfKeyValue = 0;
 
-        while (indexOfKeyValue < keys.length) {
+        for (int indexOfKeyValue = 0; indexOfKeyValue < keys.length; indexOfKeyValue++) {
             while (number >= values[indexOfKeyValue]) {
-                var remainder = number / values[indexOfKeyValue];
+                int quotient = number / values[indexOfKeyValue];
                 number = number % values[indexOfKeyValue];
-                for (int i = 0; i < remainder; i++) {
+                for (int i = 0; i < quotient; i++)
                     sb.append(keys[indexOfKeyValue]);
-                }
             }
-            indexOfKeyValue++;
         }
 
         return sb.toString();
     }
 
     static int roman2Arabian(String string) {
+
+        /**
+         * Перевод из римского в арабский путем
+         * нахождения римского значения
+         * и сложения в арабском значении
+         * от старшего разряда к младшему
+         */
+
         String[] keys = new String[]{"M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I"};
         int[] values = new int[]{1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1};
 
         int summ = 0;
-        int indexOfWord = 0;//index of word
+        int indexOfWord = 0;
 
         for (int i = 0; i < keys.length; i++) {
             while (string.regionMatches(indexOfWord, keys[i], 0, keys[i].length() )){
