@@ -38,11 +38,13 @@ public class Main {
         isArabianA = str_a.matches("[0-9]*");
         isArabianB = str_b.matches("[0-9]*");
 
-        if (isArabianA==isRomanA || isArabianB==isRomanB)
+        if (isArabianA==isRomanA | isArabianB==isRomanB)
             throw new Exception("Числа не принадлежать Римским или Арабским системам счисления");
-        if (isRomanA != isRomanB) throw new Exception("Числа разных систем счисления");
+        if (isRomanA != isRomanB | isArabianA != isArabianB)
+            throw new Exception("Числа разных систем счисления");
 
-        str_total = Calculon(str_a, str_b, isArabianA, operation);
+
+        str_total = Calculon(str_a, str_b, isArabianA&isArabianB, operation);
         return str_total;
     }
 
@@ -82,22 +84,22 @@ public class Main {
         return total;
     }
 
-    static String arabian2Roman(int num) {
+    static String arabian2Roman(int number) {
         String[] keys = new String[]{"M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I"};
-        int[] vals = new int[]{1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1};
+        int[] values = new int[]{1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1};
 
         StringBuilder sb = new StringBuilder();
-        int ind = 0;//index of keys & vals
+        int indexOfKeyValue = 0;
 
-        while (ind < keys.length) {
-            while (num >= vals[ind]) {
-                var d = num / vals[ind];
-                num = num % vals[ind];
-                for (int i = 0; i < d; i++) {
-                    sb.append(keys[ind]);
+        while (indexOfKeyValue < keys.length) {
+            while (number >= values[indexOfKeyValue]) {
+                var remainder = number / values[indexOfKeyValue];
+                number = number % values[indexOfKeyValue];
+                for (int i = 0; i < remainder; i++) {
+                    sb.append(keys[indexOfKeyValue]);
                 }
             }
-            ind++;
+            indexOfKeyValue++;
         }
 
         return sb.toString();
@@ -105,15 +107,15 @@ public class Main {
 
     static int roman2Arabian(String string) {
         String[] keys = new String[]{"M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I"};
-        int[] vals = new int[]{1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1};
+        int[] values = new int[]{1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1};
 
         int summ = 0;
-        int ind = 0;//index of word
+        int indexOfWord = 0;//index of word
 
         for (int i = 0; i < keys.length; i++) {
-            while (string.regionMatches(ind, keys[i], 0, keys[i].length() )){
-                summ += vals[i];
-                ind += keys[i].length();
+            while (string.regionMatches(indexOfWord, keys[i], 0, keys[i].length() )){
+                summ += values[i];
+                indexOfWord += keys[i].length();
             }
         }
         return summ;
