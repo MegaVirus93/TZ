@@ -40,7 +40,7 @@ public class Main {
         isArabianB = str_b.matches("[0-9]*");
 
         if (isArabianA==isRomanA | isArabianB==isRomanB)
-            throw new Exception("Числа не принадлежать Римским или Арабским системам счисления");
+            throw new Exception("Числа не принадлежат Римским или Арабским системам счисления");
         if (isRomanA != isRomanB | isArabianA != isArabianB)
             throw new Exception("Числа разных систем счисления");
 
