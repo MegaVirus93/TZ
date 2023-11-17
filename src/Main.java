@@ -5,11 +5,13 @@ public class Main {
     public static void main(String[] args) throws Exception {
 
         Scanner scanner = new Scanner(System.in);
-        String s;
-        do {
-            s = calc(scanner.nextLine());
-            System.out.println("\t=\t" + s);
-        } while (!s.equals("stop"));
+        System.out.println("(Выход командой \"stop\")\nВведите данные:");
+        String s = " ";
+        while (true) {
+            s = scanner.nextLine();
+            if (s.equals("stop")) break;
+            System.out.println("\t=\t" + calc(s));
+        }
 
 //        System.out.println("\t=\t"+calc("VI * VII"));
 
