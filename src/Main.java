@@ -12,9 +12,6 @@ public class Main {
             if (s.equals("stop")) break;
             System.out.println("\t=\t" + calc(s));
         }
-
-//        System.out.println("\t=\t"+calc("VI * VII"));
-
     }
 
     //Main calc
