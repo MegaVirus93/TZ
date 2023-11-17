@@ -39,7 +39,7 @@ public class Main {
         isArabianB = str_b.matches("[0-9]*");
 
         if (isArabianA==isRomanA || isArabianB==isRomanB)
-            throw new Exception("Не принадлежать Римским или Арабским системам счисления");
+            throw new Exception("Числа не принадлежать Римским или Арабским системам счисления");
         if (isRomanA != isRomanB) throw new Exception("Числа разных систем счисления");
 
         str_total = Calculon(str_a, str_b, isArabianA, operation);
@@ -47,19 +47,22 @@ public class Main {
     }
 
     static String Calculon(String str_a, String str_b, boolean isArabian, Operation operation) throws Exception {
-        int int_a, int_b, int_total;
+        int a, b, total;
         String str_total;
         if (isArabian) {
-            int_a = Integer.parseInt(str_a);
-            int_b = Integer.parseInt(str_b);
-            int_total= Calclulate(int_a, int_b, operation);
-            str_total = Integer.toString(int_total);
+            a = Integer.parseInt(str_a);
+            b = Integer.parseInt(str_b);
+            if ((a < 1 || a > 10) || (b < 1 || b > 10)) {
+                throw new Exception("Выход за пределы 1..10 по условию задачи");
+            }
+            total = Calclulate(a, b, operation);
+            str_total = Integer.toString(total);
         } else {
-            int_a = roman2Arabian(str_a);
-            int_b = roman2Arabian(str_b);
-            int_total = Calclulate(int_a, int_b, operation);
-            if (int_total < 1) throw new Exception("Римское число римское число может быть только положительным: " + int_total);
-            str_total = arabian2Roman(int_total);
+            a = roman2Arabian(str_a);
+            b = roman2Arabian(str_b);
+            total = Calclulate(a, b, operation);
+            if (total < 1) throw new Exception("Римское число римское число может быть только положительным: " + total);
+            str_total = arabian2Roman(total);
         }
         return str_total;
     }
@@ -67,10 +70,6 @@ public class Main {
     static int Calclulate(int a, int b, Operation operation) throws Exception {
 
         int total;
-
-        if ((a < 1 || a > 10) || (b < 1 || b > 10)) {
-            throw new Exception("Выход за пределы 1..10");
-        }
 
         switch (operation) {
             case addition: total = a + b; break;
@@ -87,7 +86,7 @@ public class Main {
         String[] keys = new String[]{"M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I"};
         int[] vals = new int[]{1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1};
 
-        StringBuilder ret = new StringBuilder();
+        StringBuilder sb = new StringBuilder();
         int ind = 0;//index of keys & vals
 
         while (ind < keys.length) {
@@ -95,13 +94,13 @@ public class Main {
                 var d = num / vals[ind];
                 num = num % vals[ind];
                 for (int i = 0; i < d; i++) {
-                    ret.append(keys[ind]);
+                    sb.append(keys[ind]);
                 }
             }
             ind++;
         }
 
-        return ret.toString();
+        return sb.toString();
     }
 
     static int roman2Arabian(String string) {
@@ -113,8 +112,8 @@ public class Main {
 
         for (int i = 0; i < keys.length; i++) {
             while (string.regionMatches(ind, keys[i], 0, keys[i].length() )){
-                summ+=vals[i];
-                ind+= keys[i].length();
+                summ += vals[i];
+                ind += keys[i].length();
             }
         }
         return summ;
