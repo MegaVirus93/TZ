@@ -6,7 +6,7 @@ public class Main {
 
         Scanner scanner = new Scanner(System.in);
         System.out.println("(Выход командой \"stop\")\nВведите данные:");
-        String s = " ";
+        String s;
         while (true) {
             s = scanner.nextLine();
             if (s.equals("stop")) break;
