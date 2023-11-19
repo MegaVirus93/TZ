@@ -22,6 +22,12 @@ class Calculator {
 
     String calc() throws Exception {
 
+        /**
+         * Основная часть, где осуществляется проверка на принадлежность
+         * той или иной системе счисления, и поддерживаемых поерации,
+         * для дальнейших вычислений
+         */
+
         int a, b, total;
         boolean isArabian, isArabianA, isArabianB, isRomanA, isRomanB;
         Operation operation;
@@ -53,22 +59,22 @@ class Calculator {
             a = Integer.parseInt(str_a);
             b = Integer.parseInt(str_b);
             if ((a < 1 || a > 10) || (b < 1 || b > 10)) throw new Exception("Выход за пределы 1..10 по условию задачи");
-            total = Calclulate(a, b, operation);
+            total = calclulate(a, b, operation);
             str_total = Integer.toString(total);
         } else {
             a = roman2Arabian(str_a);
             b = roman2Arabian(str_b);
-            total = Calclulate(a, b, operation);
+            total = calclulate(a, b, operation);
             if (total < 1) throw new Exception("Римское число римское число может быть только положительным: " + total);
             str_total = arabian2Roman(total);
         }
         return str_total;
     }
 
-    private int Calclulate(int a, int b, Operation operation) throws Exception {
+    private int calclulate(int a, int b, Operation operation) throws Exception {
 
         /**
-         * Выполнение опрерации исходя из параметра operation
+         * Выполнение арифметических опрерации исходя из параметра operation
          */
 
         int total;
