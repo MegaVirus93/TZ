@@ -7,8 +7,8 @@ class Calculator {
     private String str_operation;
 
     private final Pattern patternArabian = Pattern.compile("[0-9]+");
-    private final Pattern patternRoman = Pattern.compile("[MDCLXVI]+");
-    private final Pattern patternOperation = Pattern.compile("[+\\-*/]");
+    private static final Pattern patternRoman = Pattern.compile("[MDCLXVI]+");
+    private static final Pattern patternOperation = Pattern.compile("[+\\-*/]");
 
     private static final String[] keys = new String[]{"M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I"};
     private static final int[] values = new int[]{1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1};
@@ -24,7 +24,7 @@ class Calculator {
 
         /**
          * Основная часть, где осуществляется проверка на принадлежность
-         * той или иной системе счисления, и поддерживаемых поерации,
+         * той или иной системе счисления, и поддерживаемых операции,
          * для дальнейших вычислений
          */
 
@@ -38,14 +38,14 @@ class Calculator {
         isArabianA = str_a.matches(patternArabian.pattern());
         isArabianB = str_b.matches(patternArabian.pattern());
 
-        if(!str_operation.matches(patternOperation.pattern()))
-            throw new Exception("Неизвестная операция!" + str_operation);
+//        if(!str_operation.matches(patternOperation.pattern()))
+//            throw new Exception("Неизвестная операция!" + str_operation); //сдесь проверку можно убрать т.к. и
         if (!isArabianA & !isRomanA | !isArabianB & !isRomanB)
             throw new Exception("Числа не принадлежат Римским или Арабским системам счисления");
         if (isRomanA != isRomanB | isArabianA != isArabianB)
             throw new Exception("Числа разных систем счисления");
 
-        isArabian=isArabianA&isArabianB;//Можно взять просто isArabian, т.к. прошла проверку
+        isArabian = isArabianA & isArabianB;//Можно взять просто isArabian, т.к. прошла проверку
 
         switch (str_operation) {
             case "+": operation = Operation.addition; break;
@@ -65,7 +65,7 @@ class Calculator {
             a = roman2Arabian(str_a);
             b = roman2Arabian(str_b);
             total = calclulate(a, b, operation);
-            if (total < 1) throw new Exception("Римское число римское число может быть только положительным: " + total);
+//            if (total < 1) throw new Exception("Римское число может быть только положительным: " + total);
             str_total = arabian2Roman(total);
         }
         return str_total;
@@ -90,7 +90,7 @@ class Calculator {
         return total;
     }
 
-    static String arabian2Roman(int number) {
+    static String arabian2Roman(int number) throws Exception {
 
         /**
          * Перевод из арабского в римский путем
@@ -100,6 +100,9 @@ class Calculator {
          */
 
         StringBuilder sb = new StringBuilder();
+
+        if (number < 1) throw new Exception("Римское число может быть только положительным: " + number);
+
 
         for (int indexOfKeyValue = 0; indexOfKeyValue < keys.length; indexOfKeyValue++) {
             while (number >= values[indexOfKeyValue]) {
@@ -113,7 +116,7 @@ class Calculator {
         return sb.toString();
     }
 
-    static int roman2Arabian(String string) {
+    static int roman2Arabian(String string) throws Exception {
 
         /**
          * Перевод из римского в арабский путем
@@ -124,6 +127,9 @@ class Calculator {
 
         int summ = 0;
         int indexOfWord = 0;
+
+        if(!string.matches(patternRoman.pattern()))
+            throw new Exception("Число не принадлежит Римской системе счисления" + string);
 
         for (int i = 0; i < keys.length; i++) {
             while (string.regionMatches(indexOfWord, keys[i], 0, keys[i].length())) {

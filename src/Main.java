@@ -25,6 +25,10 @@ public class Main {
     //Main calc
     public static String calc(String input) throws Exception {
 
+        /**
+         * Находжение в строке слова ределенные пробелами и передача в качестве параметров
+         */
+
         String str_a, str_b, str_operation, str_total;
 
         Pattern patternSplit = Pattern.compile("\\s+");
@@ -37,6 +41,7 @@ public class Main {
         str_operation = arrayParameters[1];
 
         str_total = new Calculator(str_a, str_b, str_operation).calc();
+
         return str_total;
     }
 
