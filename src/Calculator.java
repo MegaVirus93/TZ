@@ -1,23 +1,36 @@
 import java.util.regex.Pattern;
 
-public class Calculator {
-    static String Calculator(String str_a, String str_b, String str_operation) throws Exception {
+class Calculator {
+
+    private String str_a;
+    private String str_b;
+    private String str_operation;
+
+    private final Pattern patternArabian = Pattern.compile("[0-9]+");
+    private final Pattern patternRoman = Pattern.compile("[MDCLXVI]+");
+    private final Pattern patternOperation = Pattern.compile("[+\\-*/]");
+
+    private static final String[] keys = new String[]{"M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I"};
+    private static final int[] values = new int[]{1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1};
+
+
+    Calculator(String str_a, String str_b, String str_operation){
+        this.str_a = str_a;
+        this.str_b = str_b;
+        this.str_operation = str_operation;
+    }
+
+    String calc() throws Exception {
 
         int a, b, total;
         boolean isArabian, isArabianA, isArabianB, isRomanA, isRomanB;
         Operation operation;
         String str_total;
 
-        Pattern patternArabian = Pattern.compile("[0-9]+");
-        Pattern patternRoman = Pattern.compile("[MDCLXVI]+");
-        Pattern patternOperation = Pattern.compile("[+\\-*/]");
-
-
         isRomanA = str_a.matches(patternRoman.pattern());
         isRomanB = str_b.matches(patternRoman.pattern());
         isArabianA = str_a.matches(patternArabian.pattern());
         isArabianB = str_b.matches(patternArabian.pattern());
-
 
         if(!str_operation.matches(patternOperation.pattern()))
             throw new Exception("Неизвестная операция!" + str_operation);
@@ -29,28 +42,17 @@ public class Calculator {
         isArabian=isArabianA&isArabianB;//Можно взять просто isArabian, т.к. прошла проверку
 
         switch (str_operation) {
-            case "+":
-                operation = Operation.addition;
-                break;
-            case "-":
-                operation = Operation.subtraction;
-                break;
-            case "*":
-                operation = Operation.multiplication;
-                break;
-            case "/":
-                operation = Operation.division;
-                break;
-            default:
-                throw new Exception("Неизвестная операция!" + str_operation);
+            case "+": operation = Operation.addition; break;
+            case "-": operation = Operation.subtraction; break;
+            case "*": operation = Operation.multiplication; break;
+            case "/": operation = Operation.division; break;
+            default: throw new Exception("Неизвестная операция!" + str_operation);
         }
 
         if (isArabian) {
             a = Integer.parseInt(str_a);
             b = Integer.parseInt(str_b);
-            if ((a < 1 || a > 10) || (b < 1 || b > 10)) {
-                throw new Exception("Выход за пределы 1..10 по условию задачи");
-            }
+            if ((a < 1 || a > 10) || (b < 1 || b > 10)) throw new Exception("Выход за пределы 1..10 по условию задачи");
             total = Calclulate(a, b, operation);
             str_total = Integer.toString(total);
         } else {
@@ -63,7 +65,7 @@ public class Calculator {
         return str_total;
     }
 
-    static int Calclulate(int a, int b, Operation operation) throws Exception {
+    private int Calclulate(int a, int b, Operation operation) throws Exception {
 
         /**
          * Выполнение опрерации исходя из параметра operation
@@ -72,20 +74,11 @@ public class Calculator {
         int total;
 
         switch (operation) {
-            case addition:
-                total = a + b;
-                break;
-            case subtraction:
-                total = a - b;
-                break;
-            case multiplication:
-                total = a * b;
-                break;
-            case division:
-                total = a / b;
-                break;
-            default:
-                throw new IllegalStateException("Неизвестная операция: " + operation);
+            case addition: total = a + b; break;
+            case subtraction: total = a - b; break;
+            case multiplication: total = a * b; break;
+            case division: total = a / b; break;
+            default: throw new IllegalStateException("Неизвестная операция: " + operation);
         }
 
         return total;
@@ -99,9 +92,6 @@ public class Calculator {
          * и последовательного записывания римского
          * от старшего разряда к младшему
          */
-
-        String[] keys = new String[]{"M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I"};
-        int[] values = new int[]{1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1};
 
         StringBuilder sb = new StringBuilder();
 
@@ -125,9 +115,6 @@ public class Calculator {
          * и сложения в арабском значении
          * от старшего разряда к младшему
          */
-
-        String[] keys = new String[]{"M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I"};
-        int[] values = new int[]{1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1};
 
         int summ = 0;
         int indexOfWord = 0;

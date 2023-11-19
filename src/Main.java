@@ -34,8 +34,8 @@ public class Main {
         str_a = arrayParameters[0];
         str_b = arrayParameters[2];
         str_operation = arrayParameters[1];
-        
-        str_total = Calculator.Calculator(str_a, str_b, str_operation);
+
+        str_total = new Calculator(str_a, str_b, str_operation).calc();
         return str_total;
     }
 
