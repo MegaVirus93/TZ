@@ -8,7 +8,7 @@ class Calculator {
 
     private final Pattern patternArabian = Pattern.compile("[0-9]+");
     private static final Pattern patternRoman = Pattern.compile("[MDCLXVI]+");
-    private static final Pattern patternOperation = Pattern.compile("[+\\-*/]");
+//    private static final Pattern patternOperation = Pattern.compile("[+\\-*/]");
 
     private static final String[] keys = new String[]{"M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I"};
     private static final int[] values = new int[]{1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1};

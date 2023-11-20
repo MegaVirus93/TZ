@@ -5,9 +5,11 @@ import java.util.regex.Pattern;
 public class Main {
     public static void main(String[] args) {
 
+        String s;
+
         Scanner scanner = new Scanner(System.in);
         System.out.println("(Выход командой \"stop\")\nВведите данные:");
-        String s;
+
         while (true) {
 
             s = scanner.nextLine();
@@ -26,7 +28,7 @@ public class Main {
     public static String calc(String input) throws Exception {
 
         /**
-         * Находжение в строке слова разделенные пробелами и передача при создании объекта в качестве параметров
+         * Нахождение в строке слова разделенные пробелами и передача при создании объекта в качестве параметров
          */
 
         String str_a, str_b, str_operation, str_total;
