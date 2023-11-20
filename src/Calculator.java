@@ -38,14 +38,17 @@ class Calculator {
         isArabianA = str_a.matches(patternArabian.pattern());
         isArabianB = str_b.matches(patternArabian.pattern());
 
-//        if(!str_operation.matches(patternOperation.pattern()))
-//            throw new Exception("Неизвестная операция!" + str_operation); //сдесь проверку можно убрать т.к. и
+/*
+        здесь проверку можно убрать т.к. проверка избыточна, и проверяется ниже в switch-case
+        if(!str_operation.matches(patternOperation.pattern()))
+            throw new Exception("Неизвестная операция!" + str_operation);
+ */
         if (!isArabianA & !isRomanA | !isArabianB & !isRomanB)
             throw new Exception("Числа не принадлежат Римским или Арабским системам счисления");
         if (isRomanA != isRomanB | isArabianA != isArabianB)
             throw new Exception("Числа разных систем счисления");
 
-        isArabian = isArabianA & isArabianB;//Можно взять просто isArabian, т.к. прошла проверку
+        isArabian = isArabianA & isArabianB;//Можно взять просто isArabianA, т.к. прошла проверку
 
         switch (str_operation) {
             case "+": operation = Operation.addition; break;

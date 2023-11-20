@@ -26,7 +26,7 @@ public class Main {
     public static String calc(String input) throws Exception {
 
         /**
-         * Находжение в строке слова ределенные пробелами и передача в качестве параметров
+         * Находжение в строке слова разделенные пробелами и передача при создании объекта в качестве параметров
          */
 
         String str_a, str_b, str_operation, str_total;
